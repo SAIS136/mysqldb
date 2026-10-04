@@ -1,0 +1,115 @@
+mysql -V
+
+mysql -u root -p
+your password
+exit
+
+mysql -u root -pyour password
+exit
+
+mysql -u root -p -h localhost
+your password
+exit
+
+-------------------------------------------------
+
+=> Check user list
+
+Method 1
+
+SHOW DATABASES;
+USE mysql;
+SELECT user FROM user;
+
+Method 2
+
+SELECT user FROM mysql.user;
+SELECT user,host FROM mysql.user;
+
+
+----------------------------------------------
+
+
+=> Create User
+
+Method 1 ( localhost )
+
+CREATE USER 'user1'@'localhost' IDENTIFIED BY 'yourpassword@#$';
+GRANT ALL PRIVILEGES ON databasename.* TO 'user1'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+CREATE USER 'user2'@'localhost' IDENTIFIED BY 'yourpassword@#$';
+GRANT ALL PRIVILEGES ON databasenameone.* TO 'user2'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON databasenametwo.* TO 'user2'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+CREATE USER 'user3'@'localhost' IDENTIFIED BY 'yourpassword@#$';
+GRANT ALL PRIVILEGES ON *.* TO 'user3'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+Method 1 ( remote )
+
+=> For Linux
+
+sudo nano /etc/mysql/mysql.config.d/mysql.cnf
+bind-address = 127.0.0.1
+bind-address = 0.0.0.0
+
+sudo systemctl restart mysql
+
+CREATE USER 'user4'@'%' IDENTIFIED BY 'yourpassword@#$';
+GRANT ALL PRIVILEGES ON *.* TO 'user1'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+sudo ufw allow 3306/udp
+sudo ufw allow 3306/tcp
+
+-------------------------------------------------------
+
+=> Update password
+
+mysql -u root -pyourpassword
+SELECT users();
+
+ALTER USER 'user1'@'localhost' IDENTIFIED BY 'yourpassword@#$123';
+exit
+
+mysql -u user1 -pyourpassword@#$123
+
+--------------------------------------------------------
+
+=> Lock User
+
+mysql -u root -p
+yourpassword
+
+SELECT users();
+
+ALTER USER 'user1'@'localhost' ACCOUNT LOCK;
+
+
+=> Unlock User
+
+mysql -u root -p
+yourpassword
+
+SELECT users();
+
+ALTER USER 'user1'@'localhost' ACCOUNT UNLOCK;
+
+mysql -u user1 -p
+yourpassword@#$123
+
+--------------------------------------------------------
+
+=> Drop User
+
+mysql -u root -p
+yourpassword
+
+SELECT user();
+
+DROP USER 'user1'@'localhost';
+
+---------------------------------------------------------
+

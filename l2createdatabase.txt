@@ -1,0 +1,24 @@
+=> Database List
+SHOW DATABASE;
+
+=> Choose Database
+USE databasename; (pydbone,phpdbone)
+
+=> Delete Database
+DROP DATABASE databasename; (pydbone,phpdbone)
+
+
+
+=> About Database Naming
+
+* Do
+CREATE DATABASE bookshop;
+CREATE DATABASE book_shop;
+CREATE DATABASE bookShop;
+
+* Don't
+CREATE DATABASE 55bookshop;
+CREATE DATABASE book#shop;
+CREATE DATABASE book Shop;
+
+--------------------------------------------------
